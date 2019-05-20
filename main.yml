@@ -1,0 +1,35 @@
+---
+- hosts: debian
+  tasks
+   - name: update
+     apt: update_cache=yes
+   - name: upgrade
+     apt: upgrade=yes
+
+   - name: installation nginx
+     apt: name=nginx state=latest
+     
+     - hosts: debian
+  tasks:
+   - name: update
+     apt: update_cache=yes
+   - name: upgrade
+     apt: upgrade=yes
+
+   - name: installation nginx
+     apt: name=nginx state=latest
+
+   - name: copie conf port 8000 nginx
+     copy: src=/etc/ansible/default dest=/etc/nginx/sites-available/default
+
+   - name: redemarrage nginx
+     systemd: name=nginx state=restarted
+     
+     ---
+- name: installation tools
+  apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - htop
+    - git
+    - zsh
+    - sudo
